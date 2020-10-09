@@ -19,16 +19,13 @@ form.addEventListener('submit', (e) => {
         .then(data => {
             const { main, name, sys, weather } = data;
 
-            console.log(listItemsArray);
-
-            if (listItemsArray.includes(name) && main != 'undefined') {
+            //prevent double cities
+            if (listItemsArray.includes(sys.id) && main != 'undefined') {
                 msg.textContent = `You already know the weather for ${name}
                 ...otherwise be more specific by providing the country code as well 😉`;
-                form.reset();
-                input.focus();
                 return;
             } else {
-                listItemsArray.push(name);
+                if (listItemsArray != 'undefined') listItemsArray.push(sys.id);
             }
 
             const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${weather[0]["icon"]
